@@ -1,0 +1,45 @@
+{
+    "config":{
+        "appName":"Teto",
+        "appVersion":"0.0.1",
+        "p2p":false,
+        "language":"en",
+        "theme":"dark"
+    },
+
+    "themes":{
+        "dark":{
+            "name":"Dark",
+            "code":"dark"
+        },
+        "light":{
+            "name":"Light",
+            "code":"light"
+        }
+    },
+
+    "languages":{
+        "en":{
+            "name":"English",
+            "code":"en",
+            "ManageClasses": "Manage Classes",
+            "VisualizeData": "Visualize Data",
+            "WorkSheetHub": "WorkSheet Hub",
+            "SupportUs": "Support Us",
+            "welcome": "Welcome!",
+            "chooseFeature": "Select a feature from the navigation."
+        },
+        "fr":{
+            "name":"Français",
+            "code":"fr"
+        },
+        "es":{
+            "name":"Español",
+            "code":"es"
+        },
+        "de":{
+            "name":"Deutsch",
+            "code":"de"
+        }
+    }
+}
