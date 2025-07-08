@@ -1,5 +1,6 @@
 import {  app, BrowserWindow, screen } from 'electron';
 import path from 'path';
+import { isDev } from './util.js';
 
 app.on('ready', () => {
 const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -13,9 +14,11 @@ const mainWindow = new BrowserWindow({
 });
 mainWindow.maximize();
 
-  // Load the React app
-  mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
-
-  // Open the DevTools (optional)
-  mainWindow.webContents.openDevTools();
+  if (isDev()) {
+    mainWindow.loadURL('http://localhost:3000');
+    // Open the DevTools (optional)
+    mainWindow.webContents.openDevTools();
+  }else {   // Load the React app
+    mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
+  }
 });
