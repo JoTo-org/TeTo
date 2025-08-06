@@ -2,7 +2,6 @@ import { app } from 'electron';
 import * as sqlite3 from 'sqlite3';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as crypto from 'crypto';
 
 // Database connection
 let db: sqlite3.Database;
@@ -758,19 +757,4 @@ export const getDatabase = (): sqlite3.Database => {
         throw new Error('Database not initialized. Call initDatabase first.');
     }
     return db;
-};
-
-/**
- * Encrypt sensitive data
- */
-const encryptSensitiveData = (data: string): string => {
-    const algorithm = 'aes-256-gcm';
-    const key = crypto.scryptSync(process.env.DB_PASSWORD!, 'salt', 32);
-    const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
-    
-    let encrypted = cipher.update(data, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    
-    return `${iv.toString('hex')}:${encrypted}`;
 };

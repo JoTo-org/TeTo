@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <h2>🎓 School Management</h2>
+        <h2>🎓 TeTo</h2>
       </div>
       <ul className="nav-links">
         {navItems.map((item) => (

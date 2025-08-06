@@ -52,7 +52,7 @@ const HeartIcon = styled(motion.div)`
     color: #F96854;
 `;
 
-const SupportUs: React.FC = () => {
+export const SupportUsPage: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -111,4 +111,4 @@ const SupportUs: React.FC = () => {
     );
 };
 
-export default SupportUs;
+export default SupportUsPage;

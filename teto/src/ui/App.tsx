@@ -3,10 +3,11 @@ import { Navbar } from './components/Navbar';
 import { StudentsPage } from './pages/Students';
 import { CoursesPage} from './pages/Courses';
 import { TeachersPage } from './pages/Teachers';
+import { SupportUsPage } from './pages/SupportUs';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('teachers');
+  const [currentPage, setCurrentPage] = useState('support');
 
   const renderPage = () => {
     switch (currentPage) {
@@ -16,6 +17,8 @@ function App() {
         return <StudentsPage />;
       case 'courses':
         return <CoursesPage />;
+      case 'support':
+        return <SupportUsPage />;
       default:
         return <TeachersPage />;
     }
