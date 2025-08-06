@@ -8,14 +8,10 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const navItems = [
-    { key: 'dashboard', label: 'Dashboard', icon: '📊' },
     { key: 'teachers', label: 'Teachers', icon: '👨‍🏫' },
     { key: 'students', label: 'Students', icon: '👨‍🎓' },
-    { key: 'classes', label: 'Classes', icon: '🏫' },
-    { key: 'subjects', label: 'Subjects', icon: '📚' },
-    { key: 'departments', label: 'Departments', icon: '🏢' },
-    { key: 'enrollments', label: 'Enrollments', icon: '📝' },
-    { key: 'grades', label: 'Grades', icon: '📊' },
+    { key: 'courses', label: 'Courses', icon: '🏫' },
+    { key: 'support', label: 'Support Us', icon: '💰' }
   ];
 
   return (
