@@ -1,7 +1,7 @@
 import { app } from 'electron';
-import * as sqlite3 from 'sqlite3';
-import * as path from 'path';
-import * as fs from 'fs';
+import sqlite3 from 'sqlite3';
+import path from 'path';
+import fs from 'fs';
 
 // Database connection
 let db: sqlite3.Database;
@@ -287,18 +287,13 @@ export const populateDummyData = async (): Promise<void> => {
          VALUES (5, 'Eduardo Rodriguez', 'Father', '555-5555', 'eduardo.r@email.com')`
     ];
     
-    // Insert dummy lessons
-    const lessonQueries = [
-        `INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) 
-         VALUES (1, 'Introduction to Variables', 'Learn about algebraic variables', 'Important foundational concept', '/content/algebra/variables.pdf', 1, 60)`,
-        `INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) 
-         VALUES (2, 'Cell Structure', 'Examining the basic components of cells', 'Remember to discuss organelles', '/content/biology/cells.pdf', 1, 90)`,
-        `INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) 
-         VALUES (3, 'Variables and Data Types', 'Understanding programming fundamentals', 'Cover strings, integers, and booleans', '/content/programming/variables.pdf', 1, 60)`,
-        `INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) 
-         VALUES (4, 'Shakespeare Introduction', 'Overview of Shakespeare\'s works', 'Focus on historical context', '/content/literature/shakespeare.pdf', 1, 75)`,
-        `INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) 
-         VALUES (5, 'Ancient Civilizations', 'Exploring early human societies', 'Cover Mesopotamia, Egypt, and Indus Valley', '/content/history/ancient.pdf', 1, 75)`
+    // Insert dummy lessons with parameterized queries
+    const lessonData = [
+        [1, 'Introduction to Variables', 'Learn about algebraic variables', 'Important foundational concept', '/content/algebra/variables.pdf', 1, 60],
+        [2, 'Cell Structure', 'Examining the basic components of cells', 'Remember to discuss organelles', '/content/biology/cells.pdf', 1, 90],
+        [3, 'Variables and Data Types', 'Understanding programming fundamentals', 'Cover strings, integers, and booleans', '/content/programming/variables.pdf', 1, 60],
+        [4, 'Shakespeare Introduction', "Overview of Shakespeare's works", 'Focus on historical context', '/content/literature/shakespeare.pdf', 1, 75],
+        [5, 'Ancient Civilizations', 'Exploring early human societies', 'Cover Mesopotamia, Egypt, and Indus Valley', '/content/history/ancient.pdf', 1, 75]
     ];
     
     // Execute all queries within a transaction
@@ -314,8 +309,7 @@ export const populateDummyData = async (): Promise<void> => {
                 ...classroomQueries,
                 ...scheduleQueries,
                 ...enrollmentQueries,
-                ...guardianQueries,
-                ...lessonQueries
+                ...guardianQueries
             ];
             
             for (const query of allQueries) {
@@ -336,6 +330,21 @@ export const populateDummyData = async (): Promise<void> => {
                     reject(err);
                 }
             });
+            
+            // Execute lesson insertions with parameters
+            for (const lessonValues of lessonData) {
+                db.run(
+                    'INSERT OR IGNORE INTO Lesson (CourseID, Title, Description, Notes, ContentURL, OrderNumber, Duration) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    lessonValues,
+                    (err) => {
+                        if (err) {
+                            console.error('Error inserting lesson:', err);
+                            db.run('ROLLBACK');
+                            reject(err);
+                        }
+                    }
+                );
+            }
             
             db.run('COMMIT', (err) => {
                 if (err) {

@@ -1,0 +1,181 @@
+/* Teachers Page Styles */
+.page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.page h1 {
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.teachers-container {
+  width: 100%;
+}
+
+.teachers-container h2 {
+  color: #34495e;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.teacher-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.teacher-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border-color: #3498db;
+}
+
+.teacher-card h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.teacher-card h3::before {
+  content: '👨‍🏫';
+  font-size: 1.5rem;
+}
+
+.teacher-details {
+  space-y: 0.5rem;
+}
+
+.teacher-details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #5a6c7d;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.teacher-details strong {
+  color: #34495e;
+  font-weight: 600;
+  min-width: 80px;
+  display: inline-block;
+}
+
+/* Loading state */
+.page div:has-text("Loading...") {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+
+/* No teachers found state */
+.teachers-container p {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  padding: 3rem 0;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #bdc3c7;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+  
+  .page h1 {
+    font-size: 2rem;
+  }
+  
+  .teachers-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .teacher-card {
+    padding: 1rem;
+  }
+  
+  .teacher-details p {
+    font-size: 0.85rem;
+  }
+  
+  .teacher-details strong {
+    min-width: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .teacher-details p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .teacher-details strong {
+    min-width: auto;
+  }
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.page div:has-text("Loading...") {
+  animation: pulse 2s infinite;
+}
+
+/* Smooth animations */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Focus states for accessibility */
+.teacher-card:focus-within {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}

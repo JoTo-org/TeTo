@@ -11,7 +11,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "transpile:electron": "tsc --project src/electron/tsconfig.json",
+    "transpile:electron": "tsc --project src/electron/tsconfig.json && tsc --project src/electron/tsconfig.preload.json",
     "dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64",
     "dist:lin": "npm run transpile:electron && npm run build && electron-builder --linux --x64",
     "dist:all": "npm run dist:win && npm run dist:lin"
@@ -28,12 +28,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@types/node": "^24.2.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/sqlite3": "^3.1.11",
     "@vitejs/plugin-react": "^4.5.2",
     "cross-env": "^7.0.3",
-    "electron": "^37.1.0",
+    "electron": "^37.2.6",
     "electron-builder": "^26.0.12",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",

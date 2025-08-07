@@ -1,29 +1,62 @@
-import {  app, BrowserWindow, screen } from 'electron';
-import path from 'path';
+import { app, BrowserWindow, screen, ipcMain} from 'electron';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { isDev } from './util.js';
-import { createTables, populateDummyData } from './datautil.js';
+import { initDatabase, createTables, populateDummyData, getAllTeachers, getAllStudents, getAllCourses } from './datautil.js';
 
-app.on('ready', () => {
-// Initialize database
-createTables();
+app.on('ready', async () => {
+  // Initialize database
+  await initDatabase();
+  await createTables();
 
-const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-const mainWindow = new BrowserWindow({
+  // Set up IPC handlers
+  ipcMain.handle('get-all-teachers', async () => {
+    try {
+      return await getAllTeachers();
+    } catch (error) {
+      console.error('Error getting teachers:', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('get-all-students', async () => {
+    try {
+      return await getAllStudents();
+    } catch (error) {
+      console.error('Error getting students:', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('get-all-courses', async () => {
+    try {
+      return await getAllCourses();
+    } catch (error) {
+      console.error('Error getting courses:', error);
+      throw error;
+    }
+  });
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  console.log('Current directory path:', __dirname);
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  const mainWindow = new BrowserWindow({
     width,
     height,
     webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
+      nodeIntegration: false, // Security: disable node integration
+      contextIsolation: true, // Security: enable context isolation
+
+      preload: join(__dirname, 'preload.js'), // Load the preload script
     },
-});
-mainWindow.maximize();
+  });
 
   if (isDev()) {
-    populateDummyData();
-    mainWindow.loadURL('http://localhost:3000');
-    // Open the DevTools (optional)
+    await populateDummyData();
+    mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
-  }else {   // Load the React app
-    mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
+  } else {
+    mainWindow.loadFile(join(app.getAppPath(), '/dist-react/index.html'));
   }
 });
