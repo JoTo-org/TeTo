@@ -1,7 +1,44 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* Prevent body scroll, let container handle it */
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Main app container */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar (if you have one) */
+.sidebar {
+  width: 250px;
+  background: #2c3e50;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Main content area - this is what should scroll */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  background: #f8f9fa;
 }
 
 .logo {

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { Teacher, Student, Course } from '../types/electron';
+import type { Teacher, Student, Course, EntityType, ElectronAPI } from '../types/electron';
 
 console.log('Preload script is loading...'); // Add this debug line
 
@@ -14,18 +14,20 @@ const electronAPI = {
     
   getAllCourses: (): Promise<Course[]> => 
     ipcRenderer.invoke('get-all-courses'),
+    
+  // New generic methods
+  deleteEntity: (entityType: EntityType, id: number): Promise<boolean> => 
+    ipcRenderer.invoke('delete-entity', entityType, id),
+  
+  updateEntity: (entityType: EntityType, id: number, data: any): Promise<boolean> => 
+    ipcRenderer.invoke('update-entity', entityType, id, data),
+    
+  createEntity: (entityType: EntityType, data: any): Promise<number> => 
+    ipcRenderer.invoke('create-entity', entityType, data),
+    
+  getEntityById: (entityType: EntityType, id: number): Promise<any> => 
+    ipcRenderer.invoke('get-entity-by-id', entityType, id),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);
 console.log('electronAPI exposed to main world'); // Add this debug line
-
-// Type definitions for the exposed API
-declare global {
-  interface Window {
-    electronAPI: {
-      getAllTeachers: () => Promise<Teacher[]>;
-      getAllStudents: () => Promise<Student[]>;
-      getAllCourses: () => Promise<Course[]>;
-    };
-  }
-}

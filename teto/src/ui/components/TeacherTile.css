@@ -1,0 +1,194 @@
+.teacher-tile {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.teacher-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.teacher-tile.clickable {
+  cursor: pointer;
+}
+
+.teacher-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border-color: #3498db;
+}
+
+.teacher-tile.editing {
+  border-color: #3498db;
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+  background: linear-gradient(145deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.teacher-tile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.teacher-tile-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.teacher-tile-header h3::before {
+  content: '👨‍🏫';
+  font-size: 1.5rem;
+}
+
+.teacher-tile-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.delete-btn:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.teacher-tile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.3rem;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  color: #34495e;
+  font-weight: 600;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  color: #5a6c7d;
+  flex: 1;
+}
+
+.edit-name-fields {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.name-input {
+  flex: 1;
+}
+
+.edit-input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: white;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.edit-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.save-btn {
+  background-color: rgba(39, 174, 96, 0.1);
+}
+
+.save-btn:hover:not(:disabled) {
+  background-color: rgba(39, 174, 96, 0.2);
+}
+
+.cancel-btn {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background-color: rgba(231, 76, 60, 0.2);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .teacher-tile {
+    padding: 1rem;
+  }
+  
+  .edit-name-fields {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .detail-label {
+    min-width: auto;
+  }
+  
+  .edit-input {
+    width: 100%;
+  }
+}
